@@ -47,11 +47,40 @@
     </div>
   </section>
 
+  <section class="ai-panel" aria-labelledby="ai-title">
+    <div class="ai-card">
+      <div class="ai-header">
+        <div>
+          <p class="ai-kicker">Your birthday sidekick</p>
+          <h2 id="ai-title">Ask the birthday buddy</h2>
+        </div>
+        <span class="ai-status">ready to chat</span>
+      </div>
+
+      <div class="ai-chat" id="ai-chat" aria-live="polite">
+        <div class="message bot"><p>Hi, birthday girl! Ask me for a wish, an idea, a fun fact, or just say habari 😊</p></div>
+      </div>
+
+      <div class="quick-actions" aria-label="Quick prompt suggestions">
+        <button class="chip" type="button" data-ai-prompt="Give me a birthday wish">Give me a birthday wish</button>
+        <button class="chip" type="button" data-ai-prompt="Ideas for my 18th">Ideas for my 18th</button>
+        <button class="chip" type="button" data-ai-prompt="Something fun about turning 18">Something fun about turning 18</button>
+      </div>
+
+      <div class="ai-input-row">
+        <label class="sr-only" for="ai-input">Type a message to the birthday buddy</label>
+        <input id="ai-input" type="text" maxlength="200" placeholder="Type your message..." aria-label="Message to the birthday buddy" />
+        <button id="ai-send" class="ai-send" type="button">Send</button>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="notes">
       <button class="note" type="button" aria-expanded="false"><b>Tap to reveal</b><span>Your surprise is waiting. I'll give it to you tomorrow 😉. Si ukuwe na siku njema kamommy. Nakupenda.</span></button>
     </div>
   </section>
+
   <p class="sign">I love you ♥</p>
 </main>
 <script src="script.js"></script>
