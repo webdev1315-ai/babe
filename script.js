@@ -11,19 +11,27 @@
     $('d').textContent=Math.floor(s/86400);$('hr').textContent=pad(Math.floor(s%86400/3600));
     $('m').textContent=pad(Math.floor(s%3600/60));$('sc').textContent=pad(s%60);
   }
-  tick();setInterval(tick,1000);
   var a=$('a'),p=$('play');
   function playSong(){
-    a.muted = false;
-    a.volume = 1;
-    a.play().then(function(){p.textContent='❚❚ Pause song';p.classList.add('on')}).catch(function(){p.textContent='▶ Tap to play our song';p.classList.remove('on')});
+    p.textContent='Loading song…';
+    a.play().then(function(){p.textContent='❚❚ Pause song';p.classList.add('on')}).catch(function(error){
+      console.error('Song playback failed:',error);
+      p.textContent='▶ Tap to try playing again';
+      p.classList.remove('on');
+    });
   }
-  playSong();
   p.addEventListener('click',function(){
     if(a.paused){playSong()}
-    else{a.pause();p.textContent='▶ Play our song';p.classList.remove('on')}
+    else{a.pause();p.textContent='▶ Play your song';p.classList.remove('on')}
   });
+  a.addEventListener('error',function(){
+    p.textContent='Song unavailable';
+    p.classList.remove('on');
+    console.error('Could not load the birthday song:',a.currentSrc);
+  });
+  a.addEventListener('ended',function(){p.textContent='▶ Play your song';p.classList.remove('on')});
   document.querySelectorAll('.note').forEach(function(c){c.addEventListener('click',function(){var o=c.classList.toggle('open');c.setAttribute('aria-expanded',o)})});
+
   var c=$('c'),x=c.getContext('2d'),parts=[],raf=0,cols=['#ff8fa9','#ffc978','#f7ecf1','#b79adf','#ff6f91'];
   function size(){c.width=innerWidth;c.height=innerHeight}size();addEventListener('resize',size);
   function burst(){for(var i=0;i<160;i++)parts.push({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*12,vy:Math.random()*-12-3,r:Math.random()*5+3,col:cols[i%5],rot:Math.random()*6,life:0});if(!raf)loop()}
@@ -32,4 +40,5 @@
     raf=parts.length?requestAnimationFrame(loop):0}
   c.addEventListener('click',function(){});
   $('h').addEventListener('click',burst);
+  tick();setInterval(tick,1000);
 })();
